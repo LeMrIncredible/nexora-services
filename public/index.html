@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexora | Grow Your Local Business</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind Config: extend minimal Nexora palette -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nexora: {
+              primary: '#CCFF00',
+              primaryDim: 'rgba(204,255,0,0.1)',
+              accent: '#3b82f6',
+              text: '#f4f4f5',
+              muted: '#a1a1aa',
+              dark: '#050505',
+              surface: '#0A0A0A'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      background-color: #050505;
+      color: #f4f4f5;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Simple modal styling */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .modal.active {
+      display: flex;
+    }
+
+    /* Futuristic animated background */
+    .futuristic-bg {
+      background: radial-gradient(circle at 20% 30%, rgba(204, 255, 0, 0.15) 0%, rgba(204, 255, 0, 0) 60%),
+                  radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0) 60%);
+      animation: move-bg 30s linear infinite;
+    }
+    @keyframes move-bg {
+      0% { background-position: 0 0, 100% 100%; }
+      50% { background-position: 100% 50%, 0 50%; }
+      100% { background-position: 0 0, 100% 100%; }
+    }
+  </style>
+</head>
+<body class="font-sans">
+  <!-- Animated Background -->
+  <div class="futuristic-bg pointer-events-none fixed inset-0 -z-10"></div>
+  <!-- Demo Video Modal -->
+  <div id="demoModal" class="modal">
+    <div class="relative w-full max-w-3xl bg-black border border-gray-700 rounded-lg overflow-hidden shadow-xl">
+      <button id="closeModal" class="absolute top-3 right-3 bg-black/50 rounded-full p-2 text-white hover:bg-white/20">
+        <i data-lucide="x"></i>
+      </button>
+      <div class="relative pt-[56.25%] bg-gray-900">
+        <iframe id="demoVideo" src="https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=0&mute=1" allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" class="absolute inset-0 w-full h-full" frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="p-4 bg-[#0A0A0A] border-t border-gray-700 text-sm">
+        <h3 class="text-white font-medium mb-1">Nexora Demo</h3>
+        <p class="text-gray-400">This short demo shows how your business runs on autopilot.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 backdrop-blur-lg bg-black/30 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded bg-nexora-primary flex items-center justify-center text-black shadow-lg">
+          <i data-lucide="layers" class="w-5 h-5"></i>
+        </div>
+        <span class="text-lg font-semibold">Nexora</span>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#automations" class="hover:text-white transition-colors">Automations</a>
+        <a href="#websites" class="hover:text-white transition-colors">Websites</a>
+        <a href="#help" class="hover:text-white transition-colors">How We Help</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="/audit.html" class="hidden sm:inline-flex bg-nexora-primary text-black px-4 py-2 rounded-md text-xs font-medium hover:bg-[#b3e600] transition">Free Audit</a>
+        <button id="openModalBtn" class="flex items-center gap-2 border border-gray-700 px-4 py-2 rounded-md text-xs text-white hover:bg-white/10 transition">
+          <i data-lucide="play" class="w-4 h-4"></i> Demo
+        </button>
+      </div>
+    </div>
+  </nav>
+  <main class="pt-24">
+    <!-- Hero Section -->
+    <section class="text-center px-6 py-32 relative">
+      <h1 class="text-5xl md:text-7xl font-semibold leading-tight mb-6">Run your business<br /><span class="text-transparent bg-clip-text bg-gradient-to-r from-nexora-primary via-white to-nexora-muted">on Autopilot</span></h1>
+      <p class="text-lg md:text-xl max-w-2xl mx-auto text-nexora-muted mb-8">It’s 2025 … why are you still drowning in paperwork? Nexora builds fast, professional websites and connects them to smart automations. Spend less time on admin and more time serving your customers.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/audit.html" class="px-8 py-4 bg-nexora-primary text-black rounded-lg font-bold text-sm shadow-lg hover:bg-[#b3e600] transition">Start Your Free Audit</a>
+        <button id="openModalBtn2" class="px-8 py-4 border border-gray-700 text-white rounded-lg font-medium text-sm hover:bg-white/10 transition flex items-center gap-2">
+          <div class="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center"><i data-lucide="play" class="w-3 h-3"></i></div>
+          Watch Demo
+        </button>
+      </div>
+    </section>
+    <!-- Problem Section -->
+    <section class="py-24 bg-[#0A0A0A] border-t border-gray-800">
+      <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-nexora-primary uppercase text-xs font-bold tracking-widest mb-2 block">The Reality</span>
+          <h2 class="text-3xl font-semibold mb-6">Running a service business shouldn't mean drowning in admin.</h2>
+          <p class="text-nexora-muted text-base mb-8">If you’re a plumber, landscaper, electrician or any hands‑on professional, evenings filled with paperwork, chasing estimates and unpaid invoices mean less time with family and clients. Your phone is full of messages, your calendar is a mess and your website is nothing more than a digital business card.</p>
+          <div class="space-y-4">
+            <div class="flex gap-4 items-start p-4 bg-white/5 border border-white/10 rounded-lg">
+              <div class="w-10 h-10 rounded-full bg-red-500/20 flex items-center justify-center">
+                <span class="text-red-400 font-bold">1</span>
+              </div>
+              <div>
+                <h3 class="text-sm font-medium">Missed Calls & Leads</h3>
+                <p class="text-xs text-nexora-muted mt-1">Potential jobs come in via phone, social and text—but they slip through the cracks.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start p-4 bg-white/5 border border-white/10 rounded-lg">
+              <div class="w-10 h-10 rounded-full bg-yellow-500/20 flex items-center justify-center">
+                <span class="text-yellow-400 font-bold">2</span>
+              </div>
+              <div>
+                <h3 class="text-sm font-medium">Evenings Lost to Paperwork</h3>
+                <p class="text-xs text-nexora-muted mt-1">Quoting, invoicing and chasing payments eat up your nights and weekends.</p>
+              </div>
+            </div>
+            <div class="flex gap-4 items-start p-4 bg-white/5 border border-white/10 rounded-lg">
+              <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center">
+                <span class="text-blue-400 font-bold">3</span>
+              </div>
+              <div>
+                <h3 class="text-sm font-medium">Forgotten Follow‑Ups</h3>
+                <p class="text-xs text-nexora-muted mt-1">After the job, asking for reviews or referrals falls to the bottom of the list.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="relative h-[450px] w-full bg-[#050505] rounded-2xl border border-gray-700 p-6 flex flex-col">
+          <h3 class="text-white font-medium mb-2">Chaos Week At A Glance</h3>
+          <p class="text-xs text-gray-500 mb-4">What a typical week looks like without systems</p>
+          <div class="grid grid-cols-4 gap-2 flex-grow relative">
+            <div class="flex flex-col items-start justify-around">
+              <span class="text-[10px] text-gray-600">8am</span>
+              <span class="text-[10px] text-gray-600">12pm</span>
+              <span class="text-[10px] text-gray-600">4pm</span>
+              <span class="text-[10px] text-gray-600">8pm</span>
+            </div>
+            <div class="col-span-3 relative">
+              <div class="absolute top-0 left-0 w-full h-10 bg-red-900/20 border-l-2 border-red-500 rounded-sm p-1 flex items-center">
+                <span class="text-[10px] text-red-300 font-bold">Missed call from new lead</span>
+              </div>
+              <div class="absolute top-16 left-0 w-3/4 h-16 bg-yellow-900/20 border-l-2 border-yellow-500 rounded-sm p-1 flex items-center">
+                <span class="text-[10px] text-yellow-300 font-bold">On site: Jones residence</span>
+              </div>
+              <div class="absolute top-32 left-0 w-full h-12 bg-blue-900/20 border-l-2 border-blue-500 rounded-sm p-1 flex items-center">
+                <span class="text-[10px] text-blue-300 font-bold">Forgotten invoice</span>
+              </div>
+              <div class="absolute bottom-4 left-0 w-full h-20 bg-gray-800 border-l-2 border-gray-600 rounded-sm flex items-center justify-center">
+                <span class="text-[10px] text-gray-400">Paperwork & catch up…</span>
+              </div>
+            </div>
+          </div>
+          <button id="openModalBtn3" class="mt-6 px-4 py-2 bg-nexora-primary text-black rounded-full text-xs font-bold self-end flex items-center gap-2 hover:bg-[#b3e600] transition">
+            <i data-lucide="play-circle" class="w-4 h-4"></i> Watch how we fix this
+          </button>
+        </div>
+      </div>
+    </section>
+    <!-- Automations Section -->
+    <section id="automations" class="py-28 px-6">
+      <div class="max-w-7xl mx-auto text-center mb-16">
+        <span class="text-nexora-primary uppercase text-xs font-bold tracking-widest mb-2 block">Your Toolset</span>
+        <h2 class="text-4xl font-semibold mb-4">5 Automations That Keep You Moving</h2>
+        <p class="text-nexora-muted max-w-xl mx-auto">Each piece of your workflow is addressed. Pick what you need or combine them all to transform your operations. Once you experience these automations you’ll wonder how you ever managed without them.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Lead Capture -->
+        <a href="/automation.html?name=lead-capture" class="bg-[#0B0F17] border border-gray-700 rounded-2xl p-6 block automation-card" data-automation="lead-capture">
+          <div class="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400 mb-4">
+            <i data-lucide="inbox" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Lead Capture & Auto‑Response</h3>
+          <p class="text-sm text-nexora-muted mb-4">Centralise calls, texts and form submissions in one inbox and send an immediate response while you’re still on the job.</p>
+        </a>
+        <!-- Smart Booking -->
+        <a href="/automation.html?name=smart-booking" class="bg-[#0B0F17] border border-gray-700 rounded-2xl p-6 block automation-card" data-automation="smart-booking">
+          <div class="w-12 h-12 rounded-lg bg-green-500/20 flex items-center justify-center text-green-400 mb-4">
+            <i data-lucide="calendar-clock" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Smart Booking & Reminders</h3>
+          <p class="text-sm text-nexora-muted mb-4">Clients pick a time from your real availability. Automatically send confirmation and reminder texts to eliminate no‑shows.</p>
+        </a>
+        <!-- Estimate Generator -->
+        <a href="/automation.html?name=estimate-generator" class="bg-[#0B0F17] border border-gray-700 rounded-2xl p-6 block automation-card" data-automation="estimate-generator">
+          <div class="w-12 h-12 rounded-lg bg-yellow-500/20 flex items-center justify-center text-yellow-400 mb-4">
+            <i data-lucide="file-text" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Quick Estimate Generator</h3>
+          <p class="text-sm text-nexora-muted mb-4">Collect job details on your site and auto‑draft an estimate ready for your review. Send it before you pack up your tools.</p>
+        </a>
+        <!-- Reviews -->
+        <a href="/automation.html?name=reputation-followup" class="bg-[#0B0F17] border border-gray-700 rounded-2xl p-6 block automation-card" data-automation="reputation-followup">
+          <div class="w-12 h-12 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 mb-4">
+            <i data-lucide="star" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Review & Reputation Follow‑Up</h3>
+          <p class="text-sm text-nexora-muted mb-4">When a job’s complete, automatically ask your customer for a Google review and gently remind them if they forget.</p>
+        </a>
+        <!-- Invoicing -->
+        <a href="/automation.html?name=invoice-tracking" class="bg-[#0B0F17] border border-gray-700 rounded-2xl p-6 block automation-card" data-automation="invoice-tracking">
+          <div class="w-12 h-12 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400 mb-4">
+            <i data-lucide="bell" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Invoice Tracking & Reminders</h3>
+          <p class="text-sm text-nexora-muted mb-4">Send professional invoices via email or text and automate polite reminders until they’re paid. No more chasing.</p>
+        </a>
+        <!-- CTA Card -->
+        <div class="bg-nexora-primary text-black rounded-2xl p-6 flex flex-col justify-center items-center cursor-pointer hover:bg-[#b3e600] transition" onclick="location.href='/audit.html'">
+          <div class="w-14 h-14 bg-black rounded-full flex items-center justify-center mb-3">
+            <i data-lucide="play" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-lg font-bold mb-1">Discover Your Stack</h3>
+          <p class="text-sm text-black/70">Take the free audit to see which automations fit you best.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Websites Section -->
+    <section id="websites" class="py-24 px-6 bg-[#080808] border-t border-gray-800">
+      <div class="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between items-end">
+        <div class="max-w-xl mb-6 md:mb-0">
+          <h2 class="text-3xl font-semibold mb-2">Websites That Work Harder</h2>
+          <p class="text-nexora-muted text-sm">Your website should be your #1 salesperson: fast, mobile‑ready and built to capture leads. Every pixel is designed to convert visitors from Google, Facebook or referrals into booked jobs.</p>
+        </div>
+        <div class="flex gap-2">
+          <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs text-white">Plumbing</span>
+          <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs text-white">Landscaping</span>
+          <span class="bg-white/5 border border-white/10 px-3 py-1 rounded text-xs text-white">HVAC</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+        <!-- Demo Site 1 -->
+        <div class="relative rounded-xl overflow-hidden border border-gray-700 cursor-pointer hover:scale-105 transition-transform duration-300 shadow-xl" onclick="location.href='/audit.html'">
+          <div class="absolute inset-0 bg-[#0f172a] p-4">
+            <div class="w-full h-full bg-[#1e293b] rounded flex flex-col relative overflow-hidden">
+              <div class="h-8 bg-[#0f172a] w-full flex items-center justify-between px-4">
+                <div class="w-16 h-2 bg-blue-400 rounded"></div>
+                <div class="flex gap-2">
+                  <div class="w-8 h-2 bg-gray-600 rounded"></div>
+                  <div class="w-8 h-2 bg-gray-600 rounded"></div>
+                </div>
+              </div>
+              <div class="p-8 flex items-center h-full">
+                <div class="space-y-3 w-2/3">
+                  <div class="w-32 h-4 bg-blue-500/20 rounded"></div>
+                  <div class="w-full h-8 bg-white rounded text-slate-900 opacity-90 text-[10px] flex items-center px-2 font-bold">LOCAL EXPERTS NEAR YOU</div>
+                  <div class="w-24 h-8 bg-blue-500 rounded mt-2 shadow-lg"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Demo Site 2 -->
+        <div class="relative rounded-xl overflow-hidden border border-gray-700 cursor-pointer hover:scale-105 transition-transform duration-300 shadow-xl" onclick="location.href='/audit.html'">
+          <div class="absolute inset-0 bg-[#0f172a] p-4">
+            <div class="w-full h-full bg-[#2a2a2a] rounded flex flex-col relative overflow-hidden">
+              <div class="h-8 bg-[#1a1a1a] w-full flex items-center justify-between px-4 border-b border-white/10">
+                <div class="w-16 h-2 bg-yellow-500 rounded"></div>
+                <div class="flex gap-2">
+                  <div class="w-8 h-2 bg-gray-600 rounded"></div>
+                </div>
+              </div>
+              <div class="p-8 flex flex-col items-center text-center justify-center h-full">
+                <div class="w-12 h-12 bg-yellow-500/20 rounded-full mb-4 flex items-center justify-center">
+                  <div class="w-6 h-6 bg-yellow-500 rounded-full"></div>
+                </div>
+                <div class="w-64 h-3 bg-gray-500 rounded mb-4"></div>
+                <div class="w-48 h-10 bg-yellow-500 rounded"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- How We Help Section -->
+    <section id="help" class="py-24 px-6 bg-[#0A0A0A] border-t border-gray-800">
+      <div class="max-w-7xl mx-auto text-center mb-16">
+        <h2 class="text-3xl font-semibold mb-3">How We Help You Grow</h2>
+        <p class="text-nexora-muted max-w-2xl mx-auto">Nexora isn’t just software; we’re your growth partner. Here’s how we work with you from day one.</p>
+      </div>
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="flex flex-col items-center bg-[#0B0F17] border border-gray-700 rounded-2xl p-8">
+          <div class="w-12 h-12 rounded-lg bg-nexora-primary/20 flex items-center justify-center text-nexora-primary mb-4">
+            <i data-lucide="clipboard-list" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Audit & Game Plan</h3>
+          <p class="text-sm text-nexora-muted">Tell us how you run your business today. We’ll map out your bottlenecks and prioritise the two or three automations that will make the biggest impact right away.</p>
+        </div>
+        <div class="flex flex-col items-center bg-[#0B0F17] border border-gray-700 rounded-2xl p-8">
+          <div class="w-12 h-12 rounded-lg bg-nexora-primary/20 flex items-center justify-center text-nexora-primary mb-4">
+            <i data-lucide="tools" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Build & Connect</h3>
+          <p class="text-sm text-nexora-muted">We build or refresh your website and connect all your channels—phone, email, social and calendar—so leads flow into one place and nothing slips away.</p>
+        </div>
+        <div class="flex flex-col items-center bg-[#0B0F17] border border-gray-700 rounded-2xl p-8">
+          <div class="w-12 h-12 rounded-lg bg-nexora-primary/20 flex items-center justify-center text-nexora-primary mb-4">
+            <i data-lucide="life-buoy" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Support & Growth</h3>
+          <p class="text-sm text-nexora-muted">Once everything’s live we’re not done. We monitor, tweak and add automations as your business grows so your systems keep up.</p>
+        </div>
+      </div>
+      <div class="mt-16 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="/audit.html" class="px-8 py-4 bg-nexora-primary text-black rounded-lg font-bold text-sm shadow-lg hover:bg-[#b3e600] transition">Start Your Free Audit</a>
+        <a href="https://calendly.com/" target="_blank" class="px-8 py-4 border border-gray-700 text-white rounded-lg font-medium text-sm hover:bg-white/10 transition">Talk Through Your Systems</a>
+      </div>
+    </section>
+    <!-- Final CTA Section -->
+    <section class="py-24 px-6">
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-4xl md:text-5xl font-semibold mb-6">Streamline Your Business Today</h2>
+        <p class="text-lg text-nexora-muted mb-10 max-w-2xl mx-auto">Join the local trades professionals who have swapped chaos for clarity. Start your free audit or jump on a quick call to see how Nexora can transform your workflow.</p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="/audit.html" class="px-10 py-4 bg-nexora-primary text-black rounded-lg font-bold text-sm hover:bg-[#b3e600] transition shadow-lg">Start Free Audit</a>
+          <button id="openModalBtn4" class="px-10 py-4 border border-gray-700 text-white rounded-lg font-medium text-sm hover:bg-white/10 transition">Watch Demo Video</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="py-10 border-t border-gray-800 bg-[#020408] text-center text-sm">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded bg-nexora-primary flex items-center justify-center text-black">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+        </div>
+        <span class="font-semibold">Nexora</span>
+      </div>
+      <div class="text-nexora-muted">© 2025 Nexora Systems. Empowering Local Businesses.</div>
+      <div class="flex gap-6">
+        <a href="https://twitter.com" target="_blank" class="text-nexora-muted hover:text-white"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+        <a href="https://www.linkedin.com" target="_blank" class="text-nexora-muted hover:text-white"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+        <a href="https://www.instagram.com" target="_blank" class="text-nexora-muted hover:text-white"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </footer>
+  <!-- Script to initialise icons and modals -->
+  <script>
+    if (window.lucide) {
+      lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+    }
+    // Modal logic
+    const modal = document.getElementById('demoModal');
+    const openButtons = document.querySelectorAll('#openModalBtn, #openModalBtn2, #openModalBtn3, #openModalBtn4');
+    const closeButton = document.getElementById('closeModal');
+    openButtons.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        modal.classList.add('active');
+        const iframe = document.getElementById('demoVideo');
+        const src = iframe.getAttribute('src');
+        if (!src.includes('autoplay=1')) {
+          iframe.setAttribute('src', src + (src.includes('?') ? '&' : '?') + 'autoplay=1&mute=1');
+        }
+      })
+    );
+    closeButton.addEventListener('click', () => {
+      modal.classList.remove('active');
+      const iframe = document.getElementById('demoVideo');
+      const currentSrc = iframe.getAttribute('src');
+      // remove any query parameters to stop playback
+      iframe.setAttribute('src', currentSrc.split('?')[0]);
+    });
+
+    // Automation cards now link to /automation.html?name=<id>.  No click
+    // handlers are attached here because the anchor handles navigation.
+  </script>
+</body>
+</html>

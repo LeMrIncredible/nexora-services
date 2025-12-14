@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexora Automation Detail</title>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            nexora: {
+              primary: '#CCFF00',
+              muted: '#a1a1aa',
+              dark: '#050505'
+            }
+          }
+        }
+      }
+    };
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      background-color: #050505;
+      color: #f4f4f5;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    /* Futuristic animated background */
+    .futuristic-bg {
+      background: radial-gradient(circle at 20% 30%, rgba(204, 255, 0, 0.15) 0%, rgba(204, 255, 0, 0) 60%),
+                  radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.15) 0%, rgba(59, 130, 246, 0) 60%);
+      animation: move-bg 30s linear infinite;
+    }
+    @keyframes move-bg {
+      0% { background-position: 0 0, 100% 100%; }
+      50% { background-position: 100% 50%, 0 50%; }
+      100% { background-position: 0 0, 100% 100%; }
+    }
+  </style>
+</head>
+<body class="font-sans">
+  <!-- Animated Background -->
+  <div class="futuristic-bg pointer-events-none fixed inset-0 -z-10"></div>
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full z-50 backdrop-blur-lg bg-black/30 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded bg-nexora-primary flex items-center justify-center text-black shadow-lg">
+          <i data-lucide="layers" class="w-5 h-5"></i>
+        </div>
+        <a href="/index.html" class="text-lg font-semibold">Nexora</a>
+      </div>
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="/index.html#automations" class="hover:text-white transition-colors">Automations</a>
+        <a href="/index.html#websites" class="hover:text-white transition-colors">Websites</a>
+        <a href="/index.html#help" class="hover:text-white transition-colors">How We Help</a>
+      </div>
+    </div>
+  </nav>
+  <main class="pt-24 pb-24 px-6">
+    <div class="max-w-4xl mx-auto">
+      <h1 id="title" class="text-4xl font-semibold mb-4"></h1>
+      <p id="summary" class="text-nexora-muted mb-8"></p>
+      <div id="details" class="space-y-6"></div>
+      <button id="runBtn" class="mt-8 px-6 py-3 bg-nexora-primary text-black rounded-lg font-bold text-sm hover:bg-[#b3e600] transition hidden">Run Test Automation</button>
+      <div id="result" class="mt-4 text-sm hidden"></div>
+    </div>
+  </main>
+  <footer class="py-8 border-t border-gray-800 bg-[#020408] text-center text-sm">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-6 h-6 rounded bg-nexora-primary flex items-center justify-center text-black">
+          <i data-lucide="layers" class="w-4 h-4"></i>
+        </div>
+        <span class="font-semibold">Nexora</span>
+      </div>
+      <div class="text-nexora-muted">© 2025 Nexora Systems.</div>
+      <div class="flex gap-6">
+        <a href="https://twitter.com" target="_blank" class="text-nexora-muted hover:text-white"><i data-lucide="twitter" class="w-4 h-4"></i></a>
+        <a href="https://www.linkedin.com" target="_blank" class="text-nexora-muted hover:text-white"><i data-lucide="linkedin" class="w-4 h-4"></i></a>
+        <a href="https://www.instagram.com" target="_blank" class="text-nexora-muted hover:text-white"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    if (window.lucide) {
+      lucide.createIcons({ attrs: { 'stroke-width': 1.5 } });
+    }
+    /**
+     * Define the content for each automation.  This should mirror the
+     * functionality described on the landing page and in the README.  Feel
+     * free to edit and expand these descriptions.  The keys must match
+     * the `data-automation` attributes used in index.html.
+     */
+    const automations = {
+      'lead-capture': {
+        title: 'Lead Capture & Auto‑Response',
+        summary: 'Centralise calls, texts and form submissions in one place and send an immediate response while you’re still on the job.',
+        painPoint: 'Missed calls and messages mean you lose jobs before you even know about them.',
+        inputs: 'Incoming leads from web forms, phone calls, text messages or social media.',
+        outputs: 'A unified lead entry in your Google Sheet and an instant auto‑reply to the prospect.',
+        workflow: [
+          'A lead contacts you via phone, text or form.',
+          'The lead details are recorded into your CRM/Google Sheet.',
+          'An acknowledgement email or text is sent automatically so they know you received their request.',
+        ],
+        integration: 'Google Sheets (for lead storage), Gmail or SMS gateway (for the auto‑response).'
+      },
+      'smart-booking': {
+        title: 'Smart Booking & Reminders',
+        summary: 'Let clients pick a time from your real availability.  Confirm and remind them automatically.',
+        painPoint: 'Endless back‑and‑forth texts to find a time and clients forgetting about their appointments.',
+        inputs: 'Your available time slots (from Google Calendar) and the customer’s preferred window.',
+        outputs: 'A confirmed calendar event and automated reminder messages.',
+        workflow: [
+          'Customer selects an available slot from your calendar via your website.',
+          'The appointment is added to your Google Calendar and theirs.',
+          'A confirmation message goes out immediately and a reminder is sent 24 hours before.',
+        ],
+        integration: 'Google Calendar (for availability and event creation), Gmail/SMS (for confirmations and reminders).'
+      },
+      'estimate-generator': {
+        title: 'Quick Estimate Generator',
+        summary: 'Gather job details and auto‑draft an estimate ready for your review.',
+        painPoint: 'Manual quotes consume hours and customers move on when they don’t hear back quickly.',
+        inputs: 'Job scope information entered via your website form.',
+        outputs: 'A pre‑formatted estimate sent to your email and ready to forward to the customer.',
+        workflow: [
+          'Customer enters details about the job requirements.',
+          'An estimate template is filled out using predefined pricing rules.',
+          'You receive the draft for approval and can send it immediately.',
+        ],
+        integration: 'Google Sheets or Docs (for estimate templates), Gmail (to deliver the estimate).'
+      },
+      'reputation-followup': {
+        title: 'Review & Reputation Follow‑Up',
+        summary: 'Automatically ask for Google reviews after each job and nudge customers who forget.',
+        painPoint: 'Great work goes unseen because customers forget to leave reviews, hurting your online ranking.',
+        inputs: 'Completion status of a job (e.g. from your job management system).',
+        outputs: 'A personalised review request email/text with your Google review link.',
+        workflow: [
+          'Mark a job as complete in your system.',
+          'A review request is sent to your customer including your Google review link.',
+          'Polite reminder messages are sent after a few days if no review is recorded.',
+        ],
+        integration: 'Gmail/SMS (for review requests), Google Business Profile (for review links).'
+      },
+      'invoice-tracking': {
+        title: 'Invoice Tracking & Reminders',
+        summary: 'Generate invoices and remind customers until they pay, without awkward phone calls.',
+        painPoint: 'Chasing down late payments disrupts your schedule and damages relationships.',
+        inputs: 'Completed job details, pricing and customer contact information.',
+        outputs: 'A professional invoice sent to the customer and follow‑up reminders until payment is received.',
+        workflow: [
+          'Generate an invoice once a job is marked complete.',
+          'Send the invoice via email/text and log it in your records.',
+          'Send polite reminder messages every few days until payment is received.',
+        ],
+        integration: 'Google Sheets (for invoice tracking), Gmail/SMS (for sending invoices and reminders).' 
+      }
+    };
+    // Parse the query string to determine which automation to display
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+    function renderAutomation(name) {
+      const detail = automations[name];
+      if (!detail) {
+        document.getElementById('title').textContent = 'Automation Not Found';
+        document.getElementById('summary').textContent = 'The requested automation does not exist.';
+        return;
+      }
+      document.getElementById('title').textContent = detail.title;
+      document.getElementById('summary').textContent = detail.summary;
+      const container = document.getElementById('details');
+      container.innerHTML = '';
+      const sections = [
+        { heading: 'What pain point does it solve?', content: detail.painPoint },
+        { heading: 'What inputs are required?', content: detail.inputs },
+        { heading: 'What do you get out of it?', content: detail.outputs },
+        { heading: 'Example workflow', content: '', list: detail.workflow },
+        { heading: 'Integrations', content: detail.integration }
+      ];
+      sections.forEach((sec) => {
+        const div = document.createElement('div');
+        const h3 = document.createElement('h3');
+        h3.className = 'text-lg font-semibold mb-1';
+        h3.textContent = sec.heading;
+        div.appendChild(h3);
+        if (sec.list) {
+          const ul = document.createElement('ul');
+          ul.className = 'list-disc list-inside text-nexora-muted text-sm space-y-1';
+          sec.list.forEach((item) => {
+            const li = document.createElement('li');
+            li.textContent = item;
+            ul.appendChild(li);
+          });
+          div.appendChild(ul);
+        } else {
+          const p = document.createElement('p');
+          p.className = 'text-nexora-muted text-sm';
+          p.textContent = sec.content;
+          div.appendChild(p);
+        }
+        container.appendChild(div);
+      });
+      // Show run button
+      const runBtn = document.getElementById('runBtn');
+      runBtn.classList.remove('hidden');
+      runBtn.onclick = async function() {
+        runBtn.disabled = true;
+        runBtn.textContent = 'Running…';
+        const resultDiv = document.getElementById('result');
+        resultDiv.classList.add('hidden');
+        try {
+          const response = await fetch(`/api/automation/${name}`);
+          const data = await response.json();
+          resultDiv.textContent = JSON.stringify(data, null, 2);
+          resultDiv.classList.remove('hidden');
+        } catch (err) {
+          resultDiv.textContent = 'Error running automation.';
+          resultDiv.classList.remove('hidden');
+        } finally {
+          runBtn.disabled = false;
+          runBtn.textContent = 'Run Test Automation';
+        }
+      };
+    }
+    const nameParam = getQueryParam('name');
+    if (nameParam) {
+      renderAutomation(nameParam);
+    } else {
+      document.getElementById('title').textContent = 'Select an Automation';
+      document.getElementById('summary').textContent = 'No automation specified in the URL.';
+    }
+  </script>
+</body>
+</html>
