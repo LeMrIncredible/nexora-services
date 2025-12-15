@@ -1,0 +1,21 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+
+# Data files
+data/
+
+# CSV and spreadsheets
+*.csv
+
+# Zip archives
+*.zip
+
+# Audit results
+audit_results.csv
