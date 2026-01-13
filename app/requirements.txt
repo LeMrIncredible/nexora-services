@@ -7,6 +7,4 @@ passlib==1.7.4
 python-dotenv==1.0.1
 Flask-WTF==1.1.1
 gunicorn==21.2.0
-fix/netlify-render
 Werkzeug==2.2.3
-main
