@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Leads | Nexora{% endblock %}
+{% block content %}
+<h2 class="mb-4">Leads</h2>
+{% if leads %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Source</th>
+      <th>Status</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for lead in leads %}
+    <tr>
+      <td>{{ lead.name }}</td>
+      <td>{{ lead.email }}</td>
+      <td>{{ lead.phone or '-' }}</td>
+      <td>{{ lead.source }}</td>
+      <td>{{ lead.status }}</td>
+      <td>{{ lead.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No leads yet.</p>
+{% endif %}
+{% endblock %}

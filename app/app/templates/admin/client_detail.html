@@ -1,0 +1,147 @@
+{% extends "layout.html" %}
+{% block title %}Client Detail | Nexora{% endblock %}
+{% block content %}
+<h2 class="mb-4">Client: {{ client.name }}</h2>
+<p><strong>Slug:</strong> {{ client.slug }}</p>
+<p><strong>Portfolio:</strong> {{ client.portfolio.name }}</p>
+
+<hr>
+<h4>Users</h4>
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for user in client.users %}
+    <tr>
+      <td>{{ user.email }}</td>
+      <td>{{ user.role }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h5>Add Client User</h5>
+<form method="post">
+  {{ user_form.hidden_tag() }}
+  <div class="mb-3">
+    {{ user_form.email.label(class="form-label") }}
+    {{ user_form.email(class="form-control") }}
+    {% for error in user_form.email.errors %}
+      <div class="text-danger">{{ error }}</div>
+    {% endfor %}
+  </div>
+  <div class="mb-3">
+    {{ user_form.password.label(class="form-label") }}
+    {{ user_form.password(class="form-control") }}
+    {% for error in user_form.password.errors %}
+      <div class="text-danger">{{ error }}</div>
+    {% endfor %}
+  </div>
+  <button type="submit" class="btn btn-primary">Add User</button>
+</form>
+
+<hr>
+<h4>Automations</h4>
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for ai in automations %}
+    <tr>
+      <td>{{ ai.template.name }}</td>
+      <td>{{ ai.template.description }}</td>
+      <td>{{ 'Enabled' if ai.enabled else 'Disabled' }}</td>
+      <td><a class="btn btn-sm btn-secondary" href="{{ url_for('admin.toggle_automation', client_id=client.id, instance_id=ai.id) }}">Toggle</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<hr>
+<h4>Leads</h4>
+{% if leads %}
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Source</th>
+      <th>Status</th>
+      <th>Created</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for lead in leads %}
+    <tr>
+      <td>{{ lead.name }}</td>
+      <td>{{ lead.email }}</td>
+      <td>{{ lead.phone or '-' }}</td>
+      <td>{{ lead.source }}</td>
+      <td>{{ lead.status }}</td>
+      <td>{{ lead.created_at.strftime('%Y-%m-%d') }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No leads.</p>
+{% endif %}
+
+<hr>
+<h4>Jobs</h4>
+{% if jobs %}
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Status</th>
+      <th>Scheduled</th>
+      <th>Lead</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for job in jobs %}
+    <tr>
+      <td>{{ job.title }}</td>
+      <td>{{ job.status }}</td>
+      <td>{{ job.scheduled_time.strftime('%Y-%m-%d') if job.scheduled_time else '-' }}</td>
+      <td>{{ job.lead.name if job.lead else '-' }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No jobs.</p>
+{% endif %}
+
+<hr>
+<h4>Recent Logs</h4>
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Type</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for log in logs %}
+    <tr>
+      <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td>{{ log.entry_type }}</td>
+      <td>{{ log.message }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

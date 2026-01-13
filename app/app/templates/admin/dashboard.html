@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}Admin Dashboard | Nexora{% endblock %}
+{% block content %}
+<h2 class="mb-4">Admin Dashboard</h2>
+<div class="row mb-4">
+  <div class="col-md-12">
+    <h4>Clients Overview</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>Users</th>
+          <th>Leads</th>
+          <th>Jobs</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for stat in client_stats %}
+        <tr>
+          <td>{{ stat.client.name }}</td>
+          <td>{{ stat.users }}</td>
+          <td>{{ stat.leads }}</td>
+          <td>{{ stat.jobs }}</td>
+          <td><a class="btn btn-sm btn-primary" href="{{ url_for('admin.client_detail', client_id=stat.client.id) }}">View</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="alert alert-warning">
+      <strong>Error logs:</strong> {{ error_logs }}
+    </div>
+  </div>
+</div>
+{% endblock %}

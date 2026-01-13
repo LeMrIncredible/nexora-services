@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block title %}Dashboard | Nexora{% endblock %}
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+{% if visible.kpi %}
+<div class="row mb-4">
+  <div class="col-sm-6 col-md-3">
+    <div class="card text-white bg-primary mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Leads Today</h5>
+        <p class="card-text fs-3">{{ leads_today }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="card text-white bg-success mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Jobs Scheduled</h5>
+        <p class="card-text fs-3">{{ jobs_scheduled }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="card text-white bg-warning mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Automations Running</h5>
+        <p class="card-text fs-3">{{ automations_running }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 col-md-3">
+    <div class="card text-white bg-info mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Time Saved (min)</h5>
+        <p class="card-text fs-3">{{ time_saved }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% if visible.automations %}
+<h4>Automations</h4>
+<div class="row mb-4">
+  {% for ai in automations %}
+    <div class="col-md-4 mb-2">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ ai.template.name }}</h5>
+          <p class="card-text">{{ ai.template.description }}</p>
+          <span class="badge bg-{{ 'success' if ai.enabled else 'secondary' }}">{{ 'Enabled' if ai.enabled else 'Disabled' }}</span>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% if visible.activity %}
+<h4>Recent Activity</h4>
+<ul class="list-group mb-4">
+  {% for log in logs %}
+    <li class="list-group-item">
+      <small class="text-muted">{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+      <span class="ms-2">{{ log.message }}</span>
+    </li>
+  {% else %}
+    <li class="list-group-item">No activity yet.</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+{% if visible.leads %}
+<div class="mb-4">
+  <h4>Leads</h4>
+  <p>View and manage your leads <a href="{{ url_for('client.leads') }}">here</a>.</p>
+</div>
+{% endif %}
+
+{% if visible.jobs %}
+<div class="mb-4">
+  <h4>Jobs</h4>
+  <p>View and manage your jobs <a href="{{ url_for('client.jobs') }}">here</a>.</p>
+</div>
+{% endif %}
+{% endblock %}

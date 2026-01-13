@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block title %}Settings | Nexora{% endblock %}
+{% block content %}
+<h2 class="mb-4">Dashboard Layout Settings</h2>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <div class="form-check mb-2">
+    {{ form.kpi_visible(class="form-check-input") }}
+    {{ form.kpi_visible.label(class="form-check-label") }}
+  </div>
+  <div class="form-check mb-2">
+    {{ form.automations_visible(class="form-check-input") }}
+    {{ form.automations_visible.label(class="form-check-label") }}
+  </div>
+  <div class="form-check mb-2">
+    {{ form.activity_visible(class="form-check-input") }}
+    {{ form.activity_visible.label(class="form-check-label") }}
+  </div>
+  <div class="form-check mb-2">
+    {{ form.leads_visible(class="form-check-input") }}
+    {{ form.leads_visible.label(class="form-check-label") }}
+  </div>
+  <div class="form-check mb-3">
+    {{ form.jobs_visible(class="form-check-input") }}
+    {{ form.jobs_visible.label(class="form-check-label") }}
+  </div>
+  <button type="submit" class="btn btn-primary">Save Settings</button>
+</form>
+{% endblock %}
