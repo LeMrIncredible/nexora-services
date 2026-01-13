@@ -74,7 +74,7 @@ def create_app(config_object: str | None = None) -> Flask:
         db.create_all()
         # Ensure the default portfolio exists
         create_default_portfolio()
-                seed_automation_templates()
+        seed_automation_templates()
 
 
         # Register blueprints
@@ -82,7 +82,7 @@ def create_app(config_object: str | None = None) -> Flask:
         from .public import public_bp
         from .client.routes import client_bp
         from .admin.routes import admin_bp
-            from .routes.automations import bp as automations_bp
+        from .routes.automations import bp as automations_bp
 
         app.regiser_blueprint(automations_bp)
 
