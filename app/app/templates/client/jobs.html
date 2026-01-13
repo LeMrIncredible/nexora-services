@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block title %}Jobs | Nexora{% endblock %}
+{% block content %}
+<h2 class="mb-4">Jobs</h2>
+<div class="row">
+  <div class="col-md-5">
+    <h4>Create Job</h4>
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.title.label(class="form-label") }}
+        {{ form.title(class="form-control") }}
+        {% for error in form.title.errors %}
+          <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="mb-3">
+        {{ form.lead_id.label(class="form-label") }}
+        {{ form.lead_id(class="form-select") }}
+      </div>
+      <div class="mb-3">
+        {{ form.scheduled_time.label(class="form-label") }}
+        {{ form.scheduled_time(class="form-control", placeholder="YYYY-MM-DD HH:MM (optional)") }}
+        {% for error in form.scheduled_time.errors %}
+          <div class="text-danger">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <button type="submit" class="btn btn-primary">Create Job</button>
+    </form>
+  </div>
+  <div class="col-md-7">
+    <h4>Existing Jobs</h4>
+    {% if jobs %}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Scheduled Time</th>
+          <th>Lead</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr>
+          <td>{{ job.title }}</td>
+          <td>{{ job.status }}</td>
+          <td>{{ job.scheduled_time.strftime('%Y-%m-%d %H:%M') if job.scheduled_time else '-' }}</td>
+          <td>{{ job.lead.name if job.lead else '-' }}</td>
+          <td>
+            {% if job.status != 'completed' %}
+            <form action="{{ url_for('client.complete_job', job_id=job.id) }}" method="post" style="display:inline-block;">
+              {{ csrf_token() }}
+              <button type="submit" class="btn btn-sm btn-success">Mark Complete</button>
+            </form>
+            {% else %}
+            <span class="text-success">Completed</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No jobs yet.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

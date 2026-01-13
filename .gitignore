@@ -19,3 +19,4 @@ data/
 
 # Audit results
 audit_results.csv
+.DS_Store

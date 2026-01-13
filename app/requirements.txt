@@ -1,0 +1,8 @@
+Flask==2.3.2
+Flask-Login==0.6.3
+Flask-SQLAlchemy==3.0.4
+Flask-Migrate==4.0.4
+APScheduler==3.10.4
+passlib==1.7.4
+python-dotenv==1.0.0
+Flask-WTF==1.1.1

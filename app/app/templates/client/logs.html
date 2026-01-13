@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %}Logs | Nexora{% endblock %}
+{% block content %}
+<h2 class="mb-4">Activity Logs</h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Time</th>
+      <th>Type</th>
+      <th>Message</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for log in logs %}
+    <tr>
+      <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td>{{ log.entry_type }}</td>
+      <td>{{ log.message }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
