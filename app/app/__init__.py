@@ -10,12 +10,13 @@ console are registered here.
 import logging
 import os
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from apscheduler.schedulers.background import BackgroundScheduler
+from .utils.seed_automations import seed_automation_templates
 
 # Initialize extensions without application context
 db = SQLAlchemy()
@@ -73,17 +74,28 @@ def create_app(config_object: str | None = None) -> Flask:
         db.create_all()
         # Ensure the default portfolio exists
         create_default_portfolio()
+                seed_automation_templates()
+
 
         # Register blueprints
         from .auth import auth_bp
         from .public import public_bp
         from .client.routes import client_bp
         from .admin.routes import admin_bp
+            from .routes.automations import bp as automations_bp
+
+        app.regiser_blueprint(automations_bp)
 
         app.register_blueprint(auth_bp)
         app.register_blueprint(public_bp)
         app.register_blueprint(client_bp)
         app.register_blueprint(admin_bp)
+  
+                        @app.route("/")
+    def index():
+        return redirect(url_for('auth.login'))
+
+
 
         # Schedule background jobs
         from .utils.scheduler import schedule_jobs
