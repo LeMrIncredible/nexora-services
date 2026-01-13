@@ -5,9 +5,11 @@ Creates the 5 required automation templates if missing.
 
 from __future__ import annotations
 
-from app.app.extensions import db
-from app.app.models import AutomationTemplate
+#from app.app.extensions import db
+#from app.app.models import AutomationTemplate
 
+from ..extensions import db
+from ..models import AutomationTemplate
 TEMPLATES = [
     {
         "slug": "lead-capture",
