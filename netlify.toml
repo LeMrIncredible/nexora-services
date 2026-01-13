@@ -1,0 +1,9 @@
+[build]
+  publish = "public"
+  command = ""
+
+# pretty URLs and SPA-friendly fallback if needed
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

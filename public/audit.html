@@ -181,12 +181,23 @@
         json[key] = value;
       });
       try {
-        const response = await fetch('/api/audit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(json),
-        });
-        const data = await response.json();
+        // Netlify static-site patch: no /api on Netlify.
+        // We'll generate lightweight recommendations client-side and open an email draft.
+        const recommendations = [];
+        const bottlenecks = (json.bottlenecks || '').toLowerCase();
+        const followups = (json.followups || '').toLowerCase();
+
+        // Simple heuristic recommendations (V1)
+        recommendations.push("Universal Lead Capture (forms + instant email notifications)");
+        recommendations.push("Daily Digest (summary email of leads/jobs/activity)");
+        if (bottlenecks.includes("follow") or followups.strip() == "" or "follow" in bottlenecks):
+            recommendations.push("Follow-Up Email Sequence (stale lead follow-ups)");
+        if ("schedule" in bottlenecks or "calendar" in bottlenecks):
+            recommendations.push("Appointment Helper (confirmations + updates)");
+        recommendations.push("Job Completion → Review Request (auto review request email)");
+
+        const data = { success: true, recommendations };
+
         if (data.success) {
           resultsDiv.classList.remove('hidden');
           // Clear old recommendations
@@ -201,6 +212,7 @@
         form.reset();
       } catch (err) {
         console.error(err);
+        alert('Audit submitted locally. If you want this to email you automatically, we’ll connect it to the Nexora backend.');
       }
     });
   </script>
