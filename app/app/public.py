@@ -18,6 +18,11 @@ from .utils.automations import run_lead_capture
 
 public_bp = Blueprint("public", __name__, url_prefix="")
 
+@public_bp.route("/", methods=["GET"])
+def index():
+    return redirect(url_for('auth.login'))
+
+
 
 class LeadForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
