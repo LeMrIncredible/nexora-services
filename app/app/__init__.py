@@ -91,10 +91,7 @@ def create_app(config_object: str | None = None) -> Flask:
         app.register_blueprint(client_bp)
         app.register_blueprint(admin_bp)
   
-            @app.route("/")
-    def index():
-        return redirect(url_for('auth.login'))
-
+     
 
 
         # Schedule background jobs
