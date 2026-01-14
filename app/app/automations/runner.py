@@ -32,7 +32,7 @@ def run_automation(slug: str, *, client: Any, payload: Optional[Dict[str, Any]] 
 
     module_path = AUTOMATION_SLUG_TO_MODULE[slug]
     try:
-        mod = importlib.import_module(module_path)
+        mod = importlib.import_module(module_path, package=__package__)
     except Exception as e:
         return {"ok": False, "slug": slug, "error": f"Import failed: {e}", "module": module_path}
 
