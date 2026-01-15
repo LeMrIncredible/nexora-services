@@ -97,14 +97,24 @@ function serveFile(res, filePath) {
           res.writeHead(404, { 'Content-Type': 'text/plain' });
           return res.end('Not found');
         }
+        // Perform placeholder replacement on fallback index as well
+        let body = indexData.toString();
+        body = body.replace(/%%PORTAL_URL%%/g, process.env.PORTAL_URL || '/login');
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
-        return res.end(indexData);
+        return res.end(body);
       });
       return;
     }
+    let body = data;
     const contentType = getContentType(filePath);
+    // If serving HTML, replace portal URL placeholder with environment variable
+    if (contentType.startsWith('text/html')) {
+      let html = body.toString();
+      html = html.replace(/%%PORTAL_URL%%/g, process.env.PORTAL_URL || '/login');
+      body = Buffer.from(html, 'utf8');
+    }
     res.writeHead(200, { 'Content-Type': contentType });
-    res.end(data);
+    res.end(body);
   });
 }
 
