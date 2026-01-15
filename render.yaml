@@ -1,0 +1,31 @@
+services:
+  # Marketing site (Node.js)
+  - type: web
+    name: nexora-website
+    env: node
+    plan: free
+    # There are no npm dependencies, so no build step is required.
+    buildCommand: echo "No build step for marketing site"
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 3000
+      # URL of the client portal.  Override this in Render’s dashboard to
+      # reference the deployed portal service (e.g. https://nexora-portal.onrender.com/login).
+      - key: PORTAL_URL
+        value: /login
+
+  # Client portal and admin console (Python/Flask)
+  - type: web
+    name: nexora-portal
+    env: python
+    plan: free
+    buildCommand: pip install -r app/requirements.txt
+    startCommand: gunicorn -b 0.0.0.0:$PORT app.run:app
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:///nexora.db
