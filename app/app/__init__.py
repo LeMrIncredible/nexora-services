@@ -74,7 +74,10 @@ def create_app(config_object: str | None = None) -> Flask:
         db.create_all()
         # Ensure the default portfolio exists
         create_default_portfolio()
-        seed_automation_templates()
+        # Seed default automation templates.  Pass the database instance
+        # explicitly to avoid circular import issues.  See
+        # app/app/utils/seed_automations.py for details.
+        seed_automation_templates(db)
 
 
         # Register blueprints
@@ -84,7 +87,11 @@ def create_app(config_object: str | None = None) -> Flask:
         from .admin.routes import admin_bp
         from .routes.automations import bp as automations_bp
 
-        app.regiser_blueprint(automations_bp)
+
+        # Register automation blueprint.  Note: previous versions mistakenly
+        # called `regiser_blueprint`, which resulted in the automations API not
+        # being registered.  Use the correct `register_blueprint` method.
+        app.register_blueprint(automations_bp)
 
         app.register_blueprint(auth_bp)
         app.register_blueprint(public_bp)
