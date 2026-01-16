@@ -100,7 +100,15 @@
         <a href="#help" class="hover:text-white transition-colors">How We Help</a>
       </div>
       <div class="flex items-center gap-4">
-        <a href="https://app.nexoraservices.info/auth/login" class="hidden sm:inline-flex border border-gray-700 text-white px-4 py-2 rounded-md text-xs font-medium hover:bg-white/10 transition">Client Portal</a>
+        <!--
+          Client Portal link
+          The href for this link is replaced at build time by the Node server.  Use the
+          %%PORTAL_URL%% placeholder which will be replaced with the value of the
+          PORTAL_URL environment variable (or fallback to /login) in server.js.  This
+          prevents dead links when deploying the marketing site and portal on
+          different domains.  See server.js for the replacement logic.
+        -->
+        <a id="client-portal-link" href="%%PORTAL_URL%%" class="hidden sm:inline-flex border border-gray-700 text-white px-4 py-2 rounded-md text-xs font-medium hover:bg-white/10 transition">Client Portal</a>
         <a href="/audit.html" class="hidden sm:inline-flex bg-nexora-primary text-black px-4 py-2 rounded-md text-xs font-medium hover:bg-[#b3e600] transition">Free Audit</a>
         <button id="openModalBtn" class="flex items-center gap-2 border border-gray-700 px-4 py-2 rounded-md text-xs text-white hover:bg-white/10 transition">
           <i data-lucide="play" class="w-4 h-4"></i> Demo
