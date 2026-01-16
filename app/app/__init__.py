@@ -11,15 +11,22 @@ import logging
 import os
 from dotenv import load_dotenv
 from flask import Flask, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+# Use the shared SQLAlchemy database instance from app.extensions.  This
+# avoids circular imports by ensuring the SQLAlchemy instance is
+# defined outside of the application factory.  Other modules may
+# ``from app import db`` and receive the same object.
+from .extensions import db
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from apscheduler.schedulers.background import BackgroundScheduler
 from .utils.seed_automations import seed_automation_templates
 
-# Initialize extensions without application context
-db = SQLAlchemy()
+# Initialize other extensions without application context.  Note that
+# ``db`` is imported from ``app.extensions`` above and thus defined
+# elsewhere.  Instantiating these extensions here (aside from ``db``)
+# makes them available throughout the app without circular
+# dependencies.
 migrate = Migrate()
 login_manager = LoginManager()
 csrf = CSRFProtect()
