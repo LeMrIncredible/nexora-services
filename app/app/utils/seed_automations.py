@@ -60,20 +60,35 @@ def seed_automation_templates(db) -> None:
     This function defers importing the AutomationTemplate model until
     execution time to avoid circular import issues.  It iterates over
     the predefined ``TEMPLATES`` list and inserts any missing
-    templates into the database.  If at least one template is added,
-    the changes are committed.
+    templates into the database.  To guard against concurrent
+    application startups (e.g., multiple Gunicorn workers) attempting
+    to insert the same records, the function checks for existing
+    templates by **name**—which is the unique column—and wraps each
+    insertion in a try/except block.  If an ``IntegrityError`` is
+    raised because another process inserted the record between the
+    existence check and the commit, the transaction is rolled back
+    and processing continues.  This ensures idempotent seeding without
+    failing the application startup.
     """
     # Import within the function body to avoid circular imports.  The
     # models module defines the AutomationTemplate class using the
     # ``db`` instance from the application factory.  At this point in
     # application setup, db has been initialised on the Flask app.
     from ..models import AutomationTemplate
+    from sqlalchemy.exc import IntegrityError
 
-    changed = False
+    # Iterate over templates and insert missing ones individually.  We
+    # perform the commit immediately after each insert to minimise the
+    # window in which a race condition could occur.  This also allows
+    # us to handle unique constraint violations gracefully.
     for t in TEMPLATES:
-        # Check if a template with the same type already exists
-        existing = AutomationTemplate.query.filter_by(type=t["type"]).first()
-        if not existing:
+        # Check if a template with the same name already exists.  Name
+        # is a unique column on AutomationTemplate, so this query
+        # prevents duplicate names across concurrent workers.
+        existing = AutomationTemplate.query.filter_by(name=t["name"]).first()
+        if existing:
+            continue
+        try:
             db.session.add(
                 AutomationTemplate(
                     type=t["type"],
@@ -81,7 +96,10 @@ def seed_automation_templates(db) -> None:
                     description=t["description"],
                 )
             )
-            changed = True
-
-    if changed:
-        db.session.commit()
+            db.session.commit()
+        except IntegrityError:
+            # Another process may have inserted the same record between
+            # our existence check and commit.  Roll back the session
+            # and continue silently.
+            db.session.rollback()
+            continue
