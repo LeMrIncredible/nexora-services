@@ -8,7 +8,12 @@ from __future__ import annotations
 #from app.app.extensions import db
 #from app.app.models import AutomationTemplate
 
-from ..extensions import db
+# Import db directly from the parent package. The db object is defined in
+# app/app/__init__.py during application setup, so we can import it from
+# the package namespace instead of an "extensions" module. Importing via
+# ``..extensions`` previously failed because the extensions module no longer
+# exists.
+from .. import db
 from ..models import AutomationTemplate
 TEMPLATES = [
     {
