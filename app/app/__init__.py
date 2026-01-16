@@ -86,6 +86,20 @@ def create_app(config_object: str | None = None) -> Flask:
         # app/app/utils/seed_automations.py for details.
         seed_automation_templates(db)
 
+        # Ensure at least one administrator exists.  If no admin users are
+        # present, create a default admin account using environment
+        # variables.  This allows the portal to be accessed immediately
+        # after deployment without requiring manual database seeding.
+        from .models import User  # imported here to avoid circular imports
+        if User.query.filter_by(role="admin").count() == 0:
+            import os as _os
+            admin_email = _os.getenv("DEFAULT_ADMIN_EMAIL", "admin@example.com").lower()
+            admin_password = _os.getenv("DEFAULT_ADMIN_PASSWORD", "changeme")
+            admin = User(email=admin_email, role="admin")
+            admin.set_password(admin_password)
+            db.session.add(admin)
+            db.session.commit()
+
 
         # Register blueprints
         from .auth import auth_bp
