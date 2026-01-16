@@ -16,38 +16,37 @@ factory in ``app/app/__init__.py`` for the invocation.
 """
 
 # Predefined list of automation templates.  Each template dictionary
-# contains the slug, human‑readable name, description, and whether the
-# automation should be enabled by default for new clients.
+# contains the internal ``type`` identifier, human‑readable name and a
+# description.  The ``type`` corresponds to the slug/identifier used
+# throughout the rest of the codebase.  We do not include a
+# ``default_enabled`` flag here because the AutomationTemplate model
+# currently does not define such a field.  If enabling logic is needed
+# by default, it should be handled at the AutomationInstance level.
 TEMPLATES = [
     {
-        "slug": "lead-capture",
+        "type": "lead-capture",
         "name": "Universal Lead Capture",
         "description": "Creates lead, tags source, sends notification email, logs action.",
-        "default_enabled": True,
     },
     {
-        "slug": "estimate-generator",
+        "type": "estimate-generator",
         "name": "Estimate Generator",
         "description": "Generates quick estimate from intake details and logs action.",
-        "default_enabled": False,
     },
     {
-        "slug": "invoice-tracking",
+        "type": "invoice-tracking",
         "name": "Invoice Tracking & Reminders",
         "description": "Creates invoice record + reminder cadence, logs each attempt.",
-        "default_enabled": False,
     },
     {
-        "slug": "reputation-followup",
+        "type": "reputation-followup",
         "name": "Job Completion → Review Request",
         "description": "Sends review request when job completes, logs action.",
-        "default_enabled": False,
     },
     {
-        "slug": "smart-booking",
+        "type": "smart-booking",
         "name": "Appointment Helper (Smart Booking)",
         "description": "Confirms appointments and schedules jobs, logs updates.",
-        "default_enabled": False,
     },
 ]
 
@@ -72,15 +71,14 @@ def seed_automation_templates(db) -> None:
 
     changed = False
     for t in TEMPLATES:
-        # Check if a template with the same slug already exists
-        existing = AutomationTemplate.query.filter_by(slug=t["slug"]).first()
+        # Check if a template with the same type already exists
+        existing = AutomationTemplate.query.filter_by(type=t["type"]).first()
         if not existing:
             db.session.add(
                 AutomationTemplate(
-                    slug=t["slug"],
+                    type=t["type"],
                     name=t["name"],
                     description=t["description"],
-                    default_enabled=t["default_enabled"],
                 )
             )
             changed = True
