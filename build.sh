@@ -51,6 +51,19 @@ npm install --legacy-peer-deps --no-audit --progress=false
 echo "[Life OS] Installing FontAwesome dependencies..."
 npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/fontawesome-svg-core --legacy-peer-deps --no-audit --progress=false
 
+# Work around an upstream bug in @fortawesome/react-fontawesome: it attempts
+# to require a misspelled module path ("@fortawesom/fontawesome-svg-core")
+# instead of the correct "@fortawesome/fontawesome-svg-core". Without
+# intervention this causes a build failure on Netlify because the module
+# cannot be resolved. To handle this, create a directory alias under
+# node_modules/@fortawesom that symlinks back to the correct package. If
+# the alias already exists, the commands below will silently succeed.
+echo "[Life OS] Creating alias for '@fortawesom/fontawesome-svg-core'..."
+mkdir -p node_modules/@fortawesom
+if [ ! -e node_modules/@fortawesom/fontawesome-svg-core ]; then
+  ln -s ../@fortawesome/fontawesome-svg-core node_modules/@fortawesom/fontawesome-svg-core || true
+fi
+
 # Build and export the Life OS application to a static site. The export
 # command outputs to the default 'out' directory.
 echo "[Life OS] Building application..."
