@@ -48,6 +48,9 @@ npm install --legacy-peer-deps --no-audit --progress=false
 
 # Build and export the Life OS application to a static site. The export
 # command outputs to the default `out` directory.
+echo "[Life OS] Installing missing FontAwesome dependencies..."
+npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons --legacy-peer-deps --no-audit --progress=false
+
 echo "[Life OS] Building application..."
 npm run build
 
