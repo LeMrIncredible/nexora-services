@@ -1,8 +1,9 @@
 [build]
   publish = "public"
-  command = ""
+  command = "bash build.sh"
 
-# pretty URLs and SPA-friendly fallback if needed
+  # pretty URLs and SPA-friendly fallback if needed
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
