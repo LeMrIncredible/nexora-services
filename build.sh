@@ -31,13 +31,32 @@ unzip -q "life-os-fixed.zip" -d "$WORK_DIR"
 # Navigate into the extracted Life OS project
 cd "$WORK_DIR"
 
-# Patch Next.js config to enable static export. This inserts an
-# `output: 'export'` property after the reactStrictMode. If the
-# property already exists, this command is a no-op.
-if grep -q "reactStrictMode" next.config.js && ! grep -q "output" next.config.js; then
-  echo "[Life OS] Patching next.config.js for static export..."
-  sed -i "/reactStrictMode: true/a\ output: 'export'," next.config.js
-fi
+# Replace next.config.js with a custom configuration that enables static export
+# and provides fallbacks for Node.js core modules that are not available
+# in the browser environment. Without these fallbacks, Next.js will try
+# to bundle modules like `fs` and `child_process`, which causes the
+# build to fail on Netlify. We also preserve reactStrictMode for
+# consistency with the original project.
+echo "[Life OS] Writing next.config.js for static export and module fallbacks..."
+cat > next.config.js <<'EOF_CFG'
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  // Export static HTML and assets so the site can be served from the public folder.
+  output: 'export',
+  webpack: (config) => {
+    // Provide fallbacks for Node.js core modules that are not available in the browser.
+    config.resolve.fallback = {
+      ...(config.resolve.fallback || {}),
+      fs: false,
+      child_process: false,
+    };
+    return config;
+  },
+};
+
+module.exports = nextConfig;
+EOF_CFG
 
 # Install dependencies. Netlify's build environment provides network
 # access to npm, so this should succeed. Use --legacy-peer-deps to avoid
